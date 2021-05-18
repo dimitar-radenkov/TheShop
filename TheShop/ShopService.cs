@@ -1,12 +1,14 @@
 ﻿using System;
 
 using TheShop.Database;
+using TheShop.Models;
 
 namespace TheShop
 {
     public class ShopService
 	{
-		private DatabaseDriver DatabaseDriver;
+		private IOrdersRepository ordersRepository;
+		private IArticleRepository articleRepository;
 		private Logger logger;
 
 		private Supplier1 Supplier1;
@@ -15,7 +17,8 @@ namespace TheShop
 		
 		public ShopService()
 		{
-			DatabaseDriver = new DatabaseDriver();
+			this.ordersRepository = new OrdersRepository();
+			this.articleRepository = new ArticleRepository();
 			logger = new Logger();
 			Supplier1 = new Supplier1();
 			Supplier2 = new Supplier2();
@@ -24,72 +27,72 @@ namespace TheShop
 
 		public void OrderAndSellArticle(int id, int maxExpectedPrice, int buyerId)
 		{
-			#region ordering article
+            #region ordering article
 
-			Article article = null;
-			Article tempArticle = null;
-			var articleExists = Supplier1.ArticleInInventory(id);
-			if (articleExists)
-			{
-				tempArticle = Supplier1.GetArticle(id);
-				if (maxExpectedPrice < tempArticle.ArticlePrice)
-				{
-					articleExists = Supplier2.ArticleInInventory(id);
-					if (articleExists)
-					{
-						tempArticle = Supplier2.GetArticle(id);
-						if (maxExpectedPrice < tempArticle.ArticlePrice)
-						{
-							articleExists = Supplier3.ArticleInInventory(id);
-							if (articleExists)
-							{
-								tempArticle = Supplier3.GetArticle(id);
-								if (maxExpectedPrice < tempArticle.ArticlePrice)
-								{
-									article = tempArticle;
-								}
-							}
-						}
-					}
-				}
-			}
-			
-			article = tempArticle;
-			#endregion
+            Article article = null;
+            Article tempArticle = null;
+            var articleExists = Supplier1.ArticleInInventory(id);
+            if (articleExists)
+            {
+                tempArticle = Supplier1.GetArticle(id);
+                if (maxExpectedPrice < tempArticle.Price)
+                {
+                    articleExists = Supplier2.ArticleInInventory(id);
+                    if (articleExists)
+                    {
+                        tempArticle = Supplier2.GetArticle(id);
+                        if (maxExpectedPrice < tempArticle.Price)
+                        {
+                            articleExists = Supplier3.ArticleInInventory(id);
+                            if (articleExists)
+                            {
+                                tempArticle = Supplier3.GetArticle(id);
+                                if (maxExpectedPrice < tempArticle.Price)
+                                {
+                                    article = tempArticle;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
 
-			#region selling article
+            article = tempArticle;
+            #endregion
 
-			if (article == null)
-			{
-				throw new Exception("Could not order article");
-			}
+            #region selling article
 
-			logger.Debug("Trying to sell article with id=" + id);
+            if (article == null)
+            {
+                throw new Exception("Could not order article");
+            }
 
-			article.IsSold = true;
-			article.SoldDate = DateTime.Now;
-			article.BuyerUserId = buyerId;
-			
-			try
-			{
-				DatabaseDriver.Save(article);
-				logger.Info("Article with id=" + id + " is sold.");
-			}
-			catch (ArgumentNullException ex)
-			{
-				logger.Error("Could not save article with id=" + id);
-				throw new Exception("Could not save article with id");
-			}
-			catch (Exception)
-			{
-			}
+            logger.Debug("Trying to sell article with id=" + id);
 
-			#endregion
-		}
+            //article.IsSold = true;
+            //article.SoldDate = DateTime.Now;
+            //article.BuyerUserId = buyerId;
 
-		public Article GetById(int id)
-		{
-			return DatabaseDriver.GetById(id);
-		}
-	}
+            try
+            {
+                this.articleRepository.Add(article.Name, article.Price);
+                logger.Info("Article with id=" + id + " is sold.");
+            }
+            catch (ArgumentNullException ex)
+            {
+                logger.Error("Could not save article with id=" + id);
+                throw new Exception("Could not save article with id");
+            }
+            catch (Exception)
+            {
+            }
+
+            #endregion
+        }
+
+        public Article GetById(int id)
+        {
+            return this.articleRepository.Get(id);
+        }
+    }
 }

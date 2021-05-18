@@ -1,4 +1,6 @@
-﻿namespace TheShop
+﻿using TheShop.Models;
+
+namespace TheShop
 {
     public class Supplier3
 	{
@@ -7,15 +9,14 @@
 			return true;
 		}
 
-		public Article GetArticle(int id)
+        public Article GetArticle(int id)
 		{
 			return new Article()
 			{
-				ID = 1,
-				Name_of_article = "Article from supplier3",
-				ArticlePrice = 460
+				Id = 1,
+				Name = "Article from supplier3",
+				Price = 460
 			};
 		}
 	}
-
 }
