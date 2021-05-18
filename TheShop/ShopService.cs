@@ -1,5 +1,7 @@
 ﻿using System;
 
+using TheShop.Database;
+
 namespace TheShop
 {
     public class ShopService
