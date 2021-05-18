@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 
 using TheShop.Models;
@@ -8,6 +7,7 @@ namespace TheShop.Database
 {
     public class OrdersRepository : IOrdersRepository
     {
+        private const string UNKNONW_ID = "Unknown Order Id";
         private readonly Dictionary<int, Order> orders;
 
         public OrdersRepository()
@@ -29,7 +29,7 @@ namespace TheShop.Database
         {
             if (!this.orders.ContainsKey(id))
             {
-                throw new ArgumentException(nameof(id));
+                throw new RepositoryException(UNKNONW_ID);
             }
 
             return this.orders[id];
@@ -44,7 +44,7 @@ namespace TheShop.Database
         {
             if (!this.orders.ContainsKey(orderId))
             {
-                throw new ArgumentException(nameof(orderId));
+                throw new RepositoryException(UNKNONW_ID);
             }
 
             this.orders[orderId] = updatedOrder;

@@ -34,13 +34,7 @@ namespace TheShop
 
             order = this.ordersRepository.Add(order);
 
-            var allAvailbleArticles = this.suppliersService.GetArticles(articleId);
-            if (!allAvailbleArticles.Any())
-            {
-                this.logger.Debug("No articles available");
-            }
-
-            var articlesFittingPrice = allAvailbleArticles
+            var articlesFittingPrice = this.suppliersService.GetArticles(articleId)
                 .Where(x => x.Price <= maxPrice)
                 .OrderBy(x => x.Price)
                 .ToList();
@@ -58,35 +52,27 @@ namespace TheShop
             var article = orderResult.Article;
             if (article == null)
             {
-                throw new Exception("Could not order article");
+                throw new ArgumentNullException("Could not order article");
             }
 
             this.logger.Debug("Trying to sell article with id=" + article.Id);
 
-            try
-            {
-                var orderId = orderResult.OrderId;
-                var order = this.ordersRepository.Get(orderId);
-                order.BuyerId = buyerId;
-                order.DateCompleted = DateTime.UtcNow;
-                order.Status = OrderStatus.Completed;
+            var orderId = orderResult.OrderId;
+            var order = this.ordersRepository.Get(orderId);
+            order.BuyerId = buyerId;
+            order.DateCompleted = DateTime.UtcNow;
+            order.Status = OrderStatus.Completed;
 
-                this.ordersRepository.Update(orderId, order);
-                this.logger.Info("Article with id=" + article.Id + " is sold.");
-            }
-            catch (ArgumentNullException ex)
-            {
-                this.logger.Error("Could not save article with id=" + article.Id);
-                throw new Exception("Could not save article with id");
-            }
-            catch (Exception)
-            {
-            }
+            this.ordersRepository.Update(orderId, order);
+            this.logger.Info("Article with id=" + article.Id + " is sold.");
         }
 
-        public Article GetById(int id)
+        public ArticleResult GetById(int id)
         {
-            return this.articleRepository.Get(id);
+            var article = this.articleRepository.Get(id);
+            var orders = this.ordersRepository.GetAll().Where(x => x.ArticleId == id).ToList();
+
+            return new ArticleResult { Article = article, Orders = orders };
         }
     }
 }

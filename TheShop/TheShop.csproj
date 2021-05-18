@@ -45,6 +45,7 @@
     <Compile Include="Database\ArticleRepository.cs" />
     <Compile Include="Database\IArticleRepository.cs" />
     <Compile Include="Database\OrdersRepository.cs" />
+    <Compile Include="Database\RepositoryException.cs" />
     <Compile Include="ISupplier.cs" />
     <Compile Include="Models\Article.cs" />
     <Compile Include="Database\IOrdersRepository.cs" />

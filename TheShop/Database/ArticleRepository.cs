@@ -14,15 +14,15 @@ namespace TheShop.Database
             this.articles = new List<Article>();
         }
 
-        public Article Add(string name, decimal price)
+        public Article Add(Article article)
         {
-            var id = this.articles.Any() ? this.articles.Max(x => x.Id) + 1 : 1;
-            var article = new Article
+            if (article == null)
             {
-                Id = id,
-                Name = name,
-                Price = price
-            };
+                throw new RepositoryException(nameof(article));
+            }
+
+            var id = this.articles.Any() ? this.articles.Max(x => x.Id) + 1 : 1;
+            article.Id = id;
 
             this.articles.Add(article);
 
@@ -31,7 +31,14 @@ namespace TheShop.Database
 
         public Article Get(int id)
         {
-            return this.articles.Single(x => x.Id == id);
+            var article = this.articles.FirstOrDefault(x => x.Id == id);
+
+            if (article == null)
+            {
+                throw new RepositoryException();
+            }
+
+            return article;
         }
     }
 }

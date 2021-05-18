@@ -21,8 +21,8 @@ namespace TheShop
 			try
 			{
 				//print article on console
-				var article = shopService.GetById(1);
-				Console.WriteLine("Found article with ID: " + article.Id);
+				var articleResult = shopService.GetById(1);
+				Console.WriteLine("Found article with ID: " + articleResult.Article.Id);
 			}
 			catch (Exception ex)
 			{
@@ -32,8 +32,8 @@ namespace TheShop
 			try
 			{
 				//print article on console				
-				var article = shopService.GetById(12);
-				Console.WriteLine("Found article with ID: " + article.Id);
+				var articleResult = shopService.GetById(12);
+				Console.WriteLine("Found article with ID: " + articleResult.Article.Id);
 			}
 			catch (Exception ex)
 			{

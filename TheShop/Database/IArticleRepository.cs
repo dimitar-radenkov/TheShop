@@ -6,6 +6,6 @@ namespace TheShop.Database
     {
         Article Get(int id);
 
-        Article Add(string name, decimal price);
+        Article Add(Article article);
     }
 }
