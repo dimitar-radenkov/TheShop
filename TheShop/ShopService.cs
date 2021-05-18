@@ -12,7 +12,7 @@ namespace TheShop
         private readonly IOrdersRepository ordersRepository;
         private readonly IArticleRepository articleRepository;
         private readonly ISuppliersService suppliersService;
-        private Logger logger;
+        private readonly Logger logger;
 
         public ShopService()
         {
@@ -20,12 +20,19 @@ namespace TheShop
             this.articleRepository = new ArticleRepository();
             this.suppliersService = new SuppliersService();
 
-            logger = new Logger();
+            this.logger = new Logger();
         }
 
-        public Article OrderArticle(int articleId, decimal maxPrice)
+        public OrderResult OrderArticle(int articleId, decimal maxPrice)
         {
-            #region ordering article
+            var order = new Order
+            {
+                Status = OrderStatus.WaitingFullfilment,
+                ArticleId = articleId,
+                DateCreated = DateTime.UtcNow,
+            };
+
+            order = this.ordersRepository.Add(order);
 
             var allAvailbleArticles = this.suppliersService.GetArticles(articleId);
             if (!allAvailbleArticles.Any())
@@ -43,41 +50,38 @@ namespace TheShop
                 this.logger.Debug("No articles available that fits price limitation");
             }
 
-            var article = articlesFittingPrice.FirstOrDefault();
-            return article;
+            return new OrderResult(order.Id, articlesFittingPrice.FirstOrDefault());
         }
 
-        public void SellArticle(Article article, int buyerId)
+        public void SellArticle(OrderResult orderResult, int buyerId)
         {
-            #region selling article
-
+            var article = orderResult.Article;
             if (article == null)
             {
                 throw new Exception("Could not order article");
             }
 
-            logger.Debug("Trying to sell article with id=" + article.Id);
-
-            //article.IsSold = true;
-            //article.SoldDate = DateTime.Now;
-            //article.BuyerUserId = buyerId;
+            this.logger.Debug("Trying to sell article with id=" + article.Id);
 
             try
             {
-                this.articleRepository.Add(article.Name, article.Price);
-                this.ordersRepository.Add(article.Id, buyerId, OrderStatus.Completed);
-                logger.Info("Article with id=" + article.Id + " is sold.");
+                var orderId = orderResult.OrderId;
+                var order = this.ordersRepository.Get(orderId);
+                order.BuyerId = buyerId;
+                order.DateCompleted = DateTime.UtcNow;
+                order.Status = OrderStatus.Completed;
+
+                this.ordersRepository.Update(orderId, order);
+                this.logger.Info("Article with id=" + article.Id + " is sold.");
             }
             catch (ArgumentNullException ex)
             {
-                logger.Error("Could not save article with id=" + article.Id);
+                this.logger.Error("Could not save article with id=" + article.Id);
                 throw new Exception("Could not save article with id");
             }
             catch (Exception)
             {
             }
-
-            #endregion
         }
 
         public Article GetById(int id)

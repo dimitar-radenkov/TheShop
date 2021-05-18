@@ -4,15 +4,15 @@ namespace TheShop
 {
 	internal class Program
 	{
-		private static void Main(string[] args)
+		private static void Main()
 		{
 			var shopService = new ShopService();
 
 			try
 			{
 				//order and sell
-				var article = shopService.OrderArticle(articleId: 1, maxPrice: 20);
-				shopService.SellArticle(article, buyerId: 10);
+				var orderResult = shopService.OrderArticle(articleId: 1, maxPrice: 20);
+				shopService.SellArticle(orderResult, buyerId: 10);
 			}
 			catch (Exception ex)
 			{

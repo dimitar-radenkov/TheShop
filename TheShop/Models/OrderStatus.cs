@@ -2,6 +2,7 @@
 {
     public enum OrderStatus
     {
+        WaitingFullfilment,
         Completed,
         Rejected
     }

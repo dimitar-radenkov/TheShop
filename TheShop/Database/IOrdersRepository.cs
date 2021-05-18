@@ -8,6 +8,10 @@ namespace TheShop.Database
     {
         IEnumerable<Order> GetAll();
 
-        Order Add(int articleId, int buyerId, OrderStatus status);
+        Order Add(Order order);
+
+        Order Get(int id);
+
+        void Update(int orderId, Order updatedOrder);
     }
 }

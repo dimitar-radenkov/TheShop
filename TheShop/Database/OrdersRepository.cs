@@ -8,32 +8,46 @@ namespace TheShop.Database
 {
     public class OrdersRepository : IOrdersRepository
     {
-        private readonly IList<Order> orders;
+        private readonly Dictionary<int, Order> orders;
 
         public OrdersRepository()
         {
-            this.orders = new List<Order>();
+            this.orders = new Dictionary<int, Order>();
         }
 
-        public Order Add(int articleId, int buyerId, OrderStatus status)
+        public Order Add(Order order)
         {
-            var id = this.orders.Any() ? this.orders.Max(x => x.Id) + 1 : 1;
-            var order = new Order
-            {
-                Id = id,
-                ArticleId = articleId,
-                BuyerId = buyerId,
-                DateCreated = DateTime.UtcNow,
-                DateCompleted = DateTime.UtcNow,
-                Status = status
-            };
+            var id = this.orders.Any() ? this.orders.Max(x => x.Key) + 1 : 1;
+            order.Id = id;
+
+            this.orders.Add(id, order);
 
             return order;
         }
 
+        public Order Get(int id)
+        {
+            if (!this.orders.ContainsKey(id))
+            {
+                throw new ArgumentException(nameof(id));
+            }
+
+            return this.orders[id];
+        }
+
         public IEnumerable<Order> GetAll()
         {
-            return this.orders;
+            return this.orders.Values;
+        }
+
+        public void Update(int orderId, Order updatedOrder)
+        {
+            if (!this.orders.ContainsKey(orderId))
+            {
+                throw new ArgumentException(nameof(orderId));
+            }
+
+            this.orders[orderId] = updatedOrder;
         }
     }
 }
