@@ -11,18 +11,18 @@ namespace TheShop
 		private IArticleRepository articleRepository;
 		private Logger logger;
 
-		private Supplier1 Supplier1;
-		private Supplier2 Supplier2;
-		private Supplier3 Supplier3;
+		private LowPriceSupplier Supplier1;
+		private MidPriceSupplier Supplier2;
+		private HiPriceSupplier Supplier3;
 		
 		public ShopService()
 		{
 			this.ordersRepository = new OrdersRepository();
 			this.articleRepository = new ArticleRepository();
 			logger = new Logger();
-			Supplier1 = new Supplier1();
-			Supplier2 = new Supplier2();
-			Supplier3 = new Supplier3();
+			Supplier1 = new LowPriceSupplier();
+			Supplier2 = new MidPriceSupplier();
+			Supplier3 = new HiPriceSupplier();
 		}
 
 		public void OrderAndSellArticle(int id, int maxExpectedPrice, int buyerId)
@@ -31,19 +31,19 @@ namespace TheShop
 
             Article article = null;
             Article tempArticle = null;
-            var articleExists = Supplier1.ArticleInInventory(id);
+            var articleExists = Supplier1.HasArticle(id);
             if (articleExists)
             {
                 tempArticle = Supplier1.GetArticle(id);
                 if (maxExpectedPrice < tempArticle.Price)
                 {
-                    articleExists = Supplier2.ArticleInInventory(id);
+                    articleExists = Supplier2.HasArticle(id);
                     if (articleExists)
                     {
                         tempArticle = Supplier2.GetArticle(id);
                         if (maxExpectedPrice < tempArticle.Price)
                         {
-                            articleExists = Supplier3.ArticleInInventory(id);
+                            articleExists = Supplier3.HasArticle(id);
                             if (articleExists)
                             {
                                 tempArticle = Supplier3.GetArticle(id);

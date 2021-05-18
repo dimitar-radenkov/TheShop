@@ -2,9 +2,9 @@
 
 namespace TheShop
 {
-    public class Supplier1
-	{
-		public bool ArticleInInventory(int id)
+    public class LowPriceSupplier : ISupplier
+    {
+		public bool HasArticle(int id)
 		{
 			return true;
 		}
@@ -14,7 +14,7 @@ namespace TheShop
 			return new Article()
 			{
 				Id = 1,
-				Name = "Article from supplier1",
+				Name = "Article from LowPriceSupplier",
 				Price = 458
 			};
 		}
