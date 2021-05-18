@@ -10,7 +10,6 @@ namespace TheShop
 
 			try
 			{
-				//order and sell
 				var orderResult = shopService.OrderArticle(articleId: 1, maxPrice: 20);
 				shopService.SellArticle(orderResult, buyerId: 10);
 			}
