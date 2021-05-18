@@ -1,65 +1,54 @@
 ﻿using System;
+using System.Linq;
 
 using TheShop.Database;
 using TheShop.Models;
+using TheShop.Services;
 
 namespace TheShop
 {
     public class ShopService
-	{
-		private IOrdersRepository ordersRepository;
-		private IArticleRepository articleRepository;
-		private Logger logger;
+    {
+        private readonly IOrdersRepository ordersRepository;
+        private readonly IArticleRepository articleRepository;
+        private readonly ISuppliersService suppliersService;
+        private Logger logger;
 
-		private LowPriceSupplier Supplier1;
-		private MidPriceSupplier Supplier2;
-		private HiPriceSupplier Supplier3;
-		
-		public ShopService()
-		{
-			this.ordersRepository = new OrdersRepository();
-			this.articleRepository = new ArticleRepository();
-			logger = new Logger();
-			Supplier1 = new LowPriceSupplier();
-			Supplier2 = new MidPriceSupplier();
-			Supplier3 = new HiPriceSupplier();
-		}
+        public ShopService()
+        {
+            this.ordersRepository = new OrdersRepository();
+            this.articleRepository = new ArticleRepository();
+            this.suppliersService = new SuppliersService();
 
-		public void OrderAndSellArticle(int id, int maxExpectedPrice, int buyerId)
-		{
+            logger = new Logger();
+        }
+
+        public Article OrderArticle(int articleId, decimal maxPrice)
+        {
             #region ordering article
 
-            Article article = null;
-            Article tempArticle = null;
-            var articleExists = Supplier1.HasArticle(id);
-            if (articleExists)
+            var allAvailbleArticles = this.suppliersService.GetArticles(articleId);
+            if (!allAvailbleArticles.Any())
             {
-                tempArticle = Supplier1.GetArticle(id);
-                if (maxExpectedPrice < tempArticle.Price)
-                {
-                    articleExists = Supplier2.HasArticle(id);
-                    if (articleExists)
-                    {
-                        tempArticle = Supplier2.GetArticle(id);
-                        if (maxExpectedPrice < tempArticle.Price)
-                        {
-                            articleExists = Supplier3.HasArticle(id);
-                            if (articleExists)
-                            {
-                                tempArticle = Supplier3.GetArticle(id);
-                                if (maxExpectedPrice < tempArticle.Price)
-                                {
-                                    article = tempArticle;
-                                }
-                            }
-                        }
-                    }
-                }
+                this.logger.Debug("No articles available");
             }
 
-            article = tempArticle;
-            #endregion
+            var articlesFittingPrice = allAvailbleArticles
+                .Where(x => x.Price <= maxPrice)
+                .OrderBy(x => x.Price)
+                .ToList();
 
+            if (!articlesFittingPrice.Any())
+            {
+                this.logger.Debug("No articles available that fits price limitation");
+            }
+
+            var article = articlesFittingPrice.FirstOrDefault();
+            return article;
+        }
+
+        public void SellArticle(Article article, int buyerId)
+        {
             #region selling article
 
             if (article == null)
@@ -67,7 +56,7 @@ namespace TheShop
                 throw new Exception("Could not order article");
             }
 
-            logger.Debug("Trying to sell article with id=" + id);
+            logger.Debug("Trying to sell article with id=" + article.Id);
 
             //article.IsSold = true;
             //article.SoldDate = DateTime.Now;
@@ -76,11 +65,12 @@ namespace TheShop
             try
             {
                 this.articleRepository.Add(article.Name, article.Price);
-                logger.Info("Article with id=" + id + " is sold.");
+                this.ordersRepository.Add(article.Id, buyerId, OrderStatus.Completed);
+                logger.Info("Article with id=" + article.Id + " is sold.");
             }
             catch (ArgumentNullException ex)
             {
-                logger.Error("Could not save article with id=" + id);
+                logger.Error("Could not save article with id=" + article.Id);
                 throw new Exception("Could not save article with id");
             }
             catch (Exception)
