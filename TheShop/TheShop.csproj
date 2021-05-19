@@ -68,6 +68,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ContainerConfig.cs" />
     <Compile Include="Database\ArticlesRepository.cs" />
     <Compile Include="Database\IArticlesRepository.cs" />
     <Compile Include="Database\IOffersRepository.cs" />
