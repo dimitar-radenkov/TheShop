@@ -5,7 +5,7 @@ using TheShop.Models;
 
 namespace TheShop.Database
 {
-    public class ArticlesRepository : IArticleRepository
+    public class ArticlesRepository : IArticlesRepository
     {
         private IList<Article> articles;
 

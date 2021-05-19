@@ -10,7 +10,7 @@ namespace TheShop.Services
     public class ShopService
     {
         private readonly IOrdersRepository ordersRepository;
-        private readonly IArticleRepository articlesRepository;
+        private readonly IArticlesRepository articlesRepository;
         private readonly ISalesRepository salesRepository;
         private readonly IOffersRepository offersRepository;
         private readonly ISuppliersService suppliersService;
@@ -18,7 +18,7 @@ namespace TheShop.Services
 
         public ShopService(
             IOrdersRepository ordersRepository,
-            IArticleRepository articlesRepository,
+            IArticlesRepository articlesRepository,
             ISalesRepository salesRepository,
             IOffersRepository offersRepository,
             ISuppliersService suppliersService)

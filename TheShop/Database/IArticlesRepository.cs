@@ -2,7 +2,7 @@
 
 namespace TheShop.Database
 {
-    public interface IArticleRepository
+    public interface IArticlesRepository
     {
         Article Get(int id);
 
