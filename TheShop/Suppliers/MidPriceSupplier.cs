@@ -15,10 +15,10 @@ namespace TheShop.Suppliers
         {
             return new ArticleWithPrice()
             {
-                Id = 1,
+                Id = id,
                 SupplierId = SUPPLIER_ID,
                 Name = "Article from MidPriceSupplier",
-                Price = 458
+                Price = 300
             };
         }
     }

@@ -5,9 +5,9 @@ namespace TheShop.Models
     public class Sale
     {
         public int Id { get; set; }
+        public int OfferId { get; set; }
         public int OrderId { get; set; }
-        public int SupplierId { get; set; }
-        public decimal Price { get; set; }
+        public int BuyerId { get; set; }
         public DateTime DateSold { get; set; }
     }
 }

@@ -44,8 +44,13 @@
   <ItemGroup>
     <Compile Include="Database\ArticleRepository.cs" />
     <Compile Include="Database\IArticleRepository.cs" />
+    <Compile Include="Database\IOrderOffersRepository.cs" />
+    <Compile Include="Database\ISalesRepository.cs" />
+    <Compile Include="Database\OrderOffersRepository.cs" />
     <Compile Include="Database\OrdersRepository.cs" />
     <Compile Include="Database\RepositoryException.cs" />
+    <Compile Include="Database\SalesRepository.cs" />
+    <Compile Include="Models\OrderOffer.cs" />
     <Compile Include="Suppliers\ISupplier.cs" />
     <Compile Include="Models\Article.cs" />
     <Compile Include="Database\IOrdersRepository.cs" />

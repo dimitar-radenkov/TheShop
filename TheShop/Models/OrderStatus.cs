@@ -2,8 +2,9 @@
 {
     public enum OrderStatus
     {
-        Created,
+        AwaitingFulfillment,
+        Fulfilled,
+        Unfullfilled,
         Completed,
-        Rejected
     }
 }

@@ -18,7 +18,7 @@ namespace TheShop.Suppliers
                 Id = id,
                 SupplierId = SUPPLIER_ID,
                 Name = "Article from HiPriceSupplier",
-                Price = 458
+                Price = 400
             };
         }
     }
