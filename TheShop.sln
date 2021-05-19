@@ -3,11 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31229.75
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TheShop", "TheShop\TheShop.csproj", "{72C6A701-A607-4030-8A52-D004440C2AA1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TheShop.UI.Console", "TheShop\TheShop.UI.Console.csproj", "{72C6A701-A607-4030-8A52-D004440C2AA1}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TheShop.Models", "TheShop.Models\TheShop.Models.csproj", "{51CFA704-B7FF-409E-9BCC-8B641032413B}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TheShop.Database", "TheShop.Database\TheShop.Database.csproj", "{CB74AF46-1196-45D0-B29F-E516B3DF7D04}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TheShop.Services", "TheShop.Services\TheShop.Services.csproj", "{218B7C75-242F-4324-BE27-045AE2A3A075}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +29,10 @@ Global
 		{CB74AF46-1196-45D0-B29F-E516B3DF7D04}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CB74AF46-1196-45D0-B29F-E516B3DF7D04}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CB74AF46-1196-45D0-B29F-E516B3DF7D04}.Release|Any CPU.Build.0 = Release|Any CPU
+		{218B7C75-242F-4324-BE27-045AE2A3A075}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{218B7C75-242F-4324-BE27-045AE2A3A075}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{218B7C75-242F-4324-BE27-045AE2A3A075}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{218B7C75-242F-4324-BE27-045AE2A3A075}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
