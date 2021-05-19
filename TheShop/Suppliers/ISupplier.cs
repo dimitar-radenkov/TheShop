@@ -1,6 +1,6 @@
 ﻿using TheShop.Models;
 
-namespace TheShop
+namespace TheShop.Suppliers
 {
     public interface ISupplier
     {

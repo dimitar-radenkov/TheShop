@@ -46,7 +46,7 @@
     <Compile Include="Database\IArticleRepository.cs" />
     <Compile Include="Database\OrdersRepository.cs" />
     <Compile Include="Database\RepositoryException.cs" />
-    <Compile Include="ISupplier.cs" />
+    <Compile Include="Suppliers\ISupplier.cs" />
     <Compile Include="Models\Article.cs" />
     <Compile Include="Database\IOrdersRepository.cs" />
     <Compile Include="Logger.cs" />
@@ -60,9 +60,9 @@
     <Compile Include="Services\ISuppliersService.cs" />
     <Compile Include="Services\ShopService.cs" />
     <Compile Include="Services\SuppliersService.cs" />
-    <Compile Include="LowPriceSupplier.cs" />
-    <Compile Include="MidPriceSupplier.cs" />
-    <Compile Include="HiPriceSupplier.cs" />
+    <Compile Include="Suppliers\LowPriceSupplier.cs" />
+    <Compile Include="Suppliers\MidPriceSupplier.cs" />
+    <Compile Include="Suppliers\HiPriceSupplier.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config">
