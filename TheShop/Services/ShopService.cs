@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Linq;
 
+using Serilog.Core;
+
 using TheShop.Database;
 using TheShop.Models;
 using TheShop.Models.ViewModels;
@@ -17,13 +19,14 @@ namespace TheShop.Services
         private readonly Logger logger;
 
         public ShopService(
+            Logger logger,
             IOrdersRepository ordersRepository,
             IArticlesRepository articlesRepository,
             ISalesRepository salesRepository,
             IOffersRepository offersRepository,
             ISuppliersService suppliersService)
         {
-            this.logger = new Logger();
+            this.logger = logger;
             this.ordersRepository = ordersRepository;
             this.articlesRepository = articlesRepository;
             this.salesRepository = salesRepository;
@@ -99,7 +102,7 @@ namespace TheShop.Services
             order.Status = OrderStatus.Completed;
             this.ordersRepository.Update(order.Id, order);
 
-            this.logger.Info("Article with id=" + order.ArticleId + " is sold.");
+            this.logger.Information("Article with id=" + order.ArticleId + " is sold.");
         }
 
         public ArticleViewModel GetById(int articleId)
