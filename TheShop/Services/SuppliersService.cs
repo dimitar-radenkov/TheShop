@@ -2,6 +2,7 @@
 using System.Linq;
 
 using TheShop.Models;
+using TheShop.Suppliers;
 
 namespace TheShop.Services
 {
