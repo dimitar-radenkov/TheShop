@@ -3,9 +3,8 @@ using System.Linq;
 
 using TheShop.Database;
 using TheShop.Models;
-using TheShop.Services;
 
-namespace TheShop
+namespace TheShop.Services
 {
     public class ShopService
     {
@@ -23,12 +22,11 @@ namespace TheShop
             this.logger = new Logger();
         }
 
-        public OrderResult OrderArticle(int articleId, decimal maxPrice)
+        public int OrderArticle(int articleId, decimal maxPrice)
         {
             var order = new Order
             {
-                Status = OrderStatus.WaitingFullfilment,
-                ArticleId = articleId,
+                Status = OrderStatus.Created,
                 DateCreated = DateTime.UtcNow,
             };
 
@@ -41,15 +39,16 @@ namespace TheShop
 
             if (!articlesFittingPrice.Any())
             {
-                this.logger.Debug("No articles available that fits price limitation");
+                this.logger.Debug("No articles available");
             }
 
-            return new OrderResult(order.Id, articlesFittingPrice.FirstOrDefault());
+            return order.Id;
         }
 
-        public void SellArticle(OrderResult orderResult, int buyerId)
+        public void SellArticle(int orderId, int buyerId)
         {
-            var article = orderResult.Article;
+            var order = this.ordersRepository.Get(orderId);
+            var article = this.articleRepository.Get(order.ArticleId);
             if (article == null)
             {
                 throw new ArgumentNullException("Could not order article");
@@ -57,8 +56,6 @@ namespace TheShop
 
             this.logger.Debug("Trying to sell article with id=" + article.Id);
 
-            var orderId = orderResult.OrderId;
-            var order = this.ordersRepository.Get(orderId);
             order.BuyerId = buyerId;
             order.DateCompleted = DateTime.UtcNow;
             order.Status = OrderStatus.Completed;
@@ -67,12 +64,12 @@ namespace TheShop
             this.logger.Info("Article with id=" + article.Id + " is sold.");
         }
 
-        public ArticleResult GetById(int id)
+        public Article GetById(int id)
         {
             var article = this.articleRepository.Get(id);
             var orders = this.ordersRepository.GetAll().Where(x => x.ArticleId == id).ToList();
 
-            return new ArticleResult { Article = article, Orders = orders };
+            return article;
         }
     }
 }

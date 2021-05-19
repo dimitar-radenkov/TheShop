@@ -1,5 +1,7 @@
 ﻿using System;
 
+using TheShop.Services;
+
 namespace TheShop
 {
 	internal class Program
@@ -21,8 +23,8 @@ namespace TheShop
 			try
 			{
 				//print article on console
-				var articleResult = shopService.GetById(1);
-				Console.WriteLine("Found article with ID: " + articleResult.Article.Id);
+				var article = shopService.GetById(1);
+				Console.WriteLine("Found article with ID: " + article.Id);
 			}
 			catch (Exception ex)
 			{
@@ -32,8 +34,8 @@ namespace TheShop
 			try
 			{
 				//print article on console				
-				var articleResult = shopService.GetById(12);
-				Console.WriteLine("Found article with ID: " + articleResult.Article.Id);
+				var article = shopService.GetById(12);
+				Console.WriteLine("Found article with ID: " + article.Id);
 			}
 			catch (Exception ex)
 			{
