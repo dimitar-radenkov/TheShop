@@ -10,22 +10,15 @@ namespace TheShop.Services
     {
         public IEnumerable<ISupplier> suppliers;
 
-        public SuppliersService()
+        public SuppliersService(ISuppliersProvider suppliersProvider)
         {
-            this.suppliers = new List<ISupplier>
-            {
-                new LowPriceSupplier(),
-                new MidPriceSupplier(),
-                new HiPriceSupplier()
-            };
+            this.suppliers = suppliersProvider.GetSuppliers();
         }
 
-        public IEnumerable<ArticleWithPrice> GetArticles(int id)
-        {
-            return this.suppliers
+        public IEnumerable<ArticleWithPrice> GetArticles(int id) =>
+            this.suppliers
                 .Where(x => x.HasArticle(id))
                 .Select(x => x.GetArticle(id))
                 .ToList();
-        }
     }
 }

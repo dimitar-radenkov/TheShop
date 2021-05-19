@@ -10,21 +10,25 @@ namespace TheShop.Services
     public class ShopService
     {
         private readonly IOrdersRepository ordersRepository;
-        private readonly IArticleRepository articleRepository;
+        private readonly IArticleRepository articlesRepository;
         private readonly ISalesRepository salesRepository;
         private readonly IOffersRepository offersRepository;
         private readonly ISuppliersService suppliersService;
         private readonly Logger logger;
 
-        public ShopService()
+        public ShopService(
+            IOrdersRepository ordersRepository,
+            IArticleRepository articlesRepository,
+            ISalesRepository salesRepository,
+            IOffersRepository offersRepository,
+            ISuppliersService suppliersService)
         {
-            this.ordersRepository = new OrdersRepository();
-            this.articleRepository = new ArticleRepository();
-            this.salesRepository = new SalesRepository();
-            this.offersRepository = new OffersRepository();
-            this.suppliersService = new SuppliersService();
-
             this.logger = new Logger();
+            this.ordersRepository = ordersRepository;
+            this.articlesRepository = articlesRepository;
+            this.salesRepository = salesRepository;
+            this.offersRepository = offersRepository;
+            this.suppliersService = suppliersService;
         }
 
         public Order MakeOrder(int articleId, decimal maxPrice)
@@ -45,10 +49,10 @@ namespace TheShop.Services
 
                 order.Status = articles.Any() ? OrderStatus.Fulfilled : OrderStatus.Unfullfilled;
 
+                this.ordersRepository.Add(order);
+
                 if (articles.Any())
                 {
-                    this.ordersRepository.Add(order);
-
                     articles
                         .Select(x => new OrderOffer
                         {
@@ -67,6 +71,7 @@ namespace TheShop.Services
             {
                 this.logger.Debug($"Unable to make order for article [{articleId}]. Reason: {e.Message}");
                 order = this.ordersRepository.Add(order);
+
                 return order;
             }
         }
@@ -99,7 +104,7 @@ namespace TheShop.Services
 
         public ArticleViewModel GetById(int articleId)
         {
-            var article = this.articleRepository.Get(articleId);
+            var article = this.articlesRepository.Get(articleId);
 
             var orders = this.ordersRepository.GetAll()
                 .Where(x => x.ArticleId == articleId)

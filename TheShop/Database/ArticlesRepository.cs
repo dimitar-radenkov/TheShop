@@ -5,11 +5,11 @@ using TheShop.Models;
 
 namespace TheShop.Database
 {
-    public class ArticleRepository : IArticleRepository
+    public class ArticlesRepository : IArticleRepository
     {
         private IList<Article> articles;
 
-        public ArticleRepository()
+        public ArticlesRepository()
         {
             this.articles = new List<Article>();
         }
