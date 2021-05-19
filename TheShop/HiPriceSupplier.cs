@@ -9,9 +9,9 @@ namespace TheShop
 			return true;
 		}
 
-		public Article GetArticle(int id)
+		public ArticleWithPrice GetArticle(int id)
 		{
-			return new Article()
+			return new ArticleWithPrice()
 			{
 				Id = 1,
 				Name = "Article from HiPriceSupplier",

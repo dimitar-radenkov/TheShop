@@ -19,7 +19,7 @@ namespace TheShop.Services
             };
         }
 
-        public IEnumerable<Article> GetArticles(int id)
+        public IEnumerable<ArticleWithPrice> GetArticles(int id)
         {
             return this.suppliers
                 .Where(x => x.HasArticle(id))

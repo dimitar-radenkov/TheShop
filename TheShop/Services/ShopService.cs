@@ -57,7 +57,6 @@ namespace TheShop.Services
             this.logger.Debug("Trying to sell article with id=" + article.Id);
 
             order.BuyerId = buyerId;
-            order.DateCompleted = DateTime.UtcNow;
             order.Status = OrderStatus.Completed;
 
             this.ordersRepository.Update(orderId, order);

@@ -50,8 +50,10 @@
     <Compile Include="Models\Article.cs" />
     <Compile Include="Database\IOrdersRepository.cs" />
     <Compile Include="Logger.cs" />
+    <Compile Include="Models\ArticleWithPrice.cs" />
     <Compile Include="Models\Order.cs" />
     <Compile Include="Models\OrderStatus.cs" />
+    <Compile Include="Models\Sale.cs" />
     <Compile Include="OrderResult.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

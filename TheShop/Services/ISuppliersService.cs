@@ -6,6 +6,6 @@ namespace TheShop.Services
 {
     public interface ISuppliersService
     {
-        IEnumerable<Article> GetArticles(int id);
+        IEnumerable<ArticleWithPrice> GetArticles(int id);
     }
 }
