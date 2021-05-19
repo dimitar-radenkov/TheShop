@@ -17,7 +17,6 @@ namespace TheShop.Suppliers
             {
                 Id = id,
                 SupplierId = SUPPLIER_ID,
-                Name = "Article from HiPriceSupplier",
                 Price = 400
             };
         }

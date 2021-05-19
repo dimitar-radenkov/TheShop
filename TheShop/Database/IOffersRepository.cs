@@ -4,7 +4,7 @@ using TheShop.Models;
 
 namespace TheShop.Database
 {
-    public interface IOrderOffersRepository
+    public interface IOffersRepository
     {
         OrderOffer Add(OrderOffer orderArticle);
         OrderOffer Get(int id);

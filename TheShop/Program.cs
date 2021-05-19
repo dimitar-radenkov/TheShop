@@ -8,17 +8,23 @@ namespace TheShop
 	{
 		private static void Main()
 		{
-           
 
 			var shopService = new ShopService();
 
 			try
 			{
-				var order = shopService.Order(articleId: 1, maxPrice: 250);
-				shopService.Sell(order, buyerId: 10);
+				var order = shopService.MakeOrder(articleId: 1, maxPrice: 10);
+				if (order.Status == Models.OrderStatus.Fulfilled)
+				{
+					shopService.Sell(order, buyerId: 10);
+				}
 
-				var order1 = shopService.Order(articleId: 1, maxPrice: 350);
-				shopService.Sell(order1, buyerId: 10);
+				var order1 = shopService.MakeOrder(articleId: 1, maxPrice: 20);
+                if (order1.Status == Models.OrderStatus.Fulfilled)
+                {
+					shopService.Sell(order1, buyerId: 10);
+				}
+				
 			}
 			catch (Exception ex)
 			{

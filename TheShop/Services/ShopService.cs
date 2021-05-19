@@ -3,6 +3,7 @@ using System.Linq;
 
 using TheShop.Database;
 using TheShop.Models;
+using TheShop.Models.ViewModels;
 
 namespace TheShop.Services
 {
@@ -11,7 +12,7 @@ namespace TheShop.Services
         private readonly IOrdersRepository ordersRepository;
         private readonly IArticleRepository articleRepository;
         private readonly ISalesRepository salesRepository;
-        private readonly IOrderOffersRepository offersRepository;
+        private readonly IOffersRepository offersRepository;
         private readonly ISuppliersService suppliersService;
         private readonly Logger logger;
 
@@ -19,18 +20,14 @@ namespace TheShop.Services
         {
             this.ordersRepository = new OrdersRepository();
             this.articleRepository = new ArticleRepository();
-            this.articleRepository.Add(new Article { Id = 1, Name = "Item1" });
-            this.articleRepository.Add(new Article { Id = 2, Name = "Item2" });
-            this.articleRepository.Add(new Article { Id = 3, Name = "Item3" });
-
             this.salesRepository = new SalesRepository();
-            this.offersRepository = new OrderOffersRepository();
+            this.offersRepository = new OffersRepository();
             this.suppliersService = new SuppliersService();
 
             this.logger = new Logger();
         }
 
-        public Order Order(int articleId, decimal maxPrice)
+        public Order MakeOrder(int articleId, decimal maxPrice)
         {
             var order = new Order
             {
@@ -68,7 +65,7 @@ namespace TheShop.Services
             }
             catch (Exception e)
             {
-                this.logger.Debug($"Unable to get article [{articleId}] from suppliers. Reason: {e.Message}");
+                this.logger.Debug($"Unable to make order for article [{articleId}]. Reason: {e.Message}");
                 order = this.ordersRepository.Add(order);
                 return order;
             }
@@ -100,7 +97,7 @@ namespace TheShop.Services
             this.logger.Info("Article with id=" + order.ArticleId + " is sold.");
         }
 
-        public Article GetById(int articleId)
+        public ArticleViewModel GetById(int articleId)
         {
             var article = this.articleRepository.Get(articleId);
 
@@ -113,7 +110,7 @@ namespace TheShop.Services
                 .Where(sale => orders.Select(x => x.Id).ToList().Contains(sale.OrderId))
                 .ToList();
 
-            return article;
+            return new ArticleViewModel(article.Id, article.Name);
         }
     }
 }

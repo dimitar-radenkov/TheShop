@@ -5,11 +5,11 @@ using TheShop.Models;
 
 namespace TheShop.Database
 {
-    public class OrderOffersRepository : IOrderOffersRepository
+    public class OffersRepository : IOffersRepository
     {
         private List<OrderOffer> orderArticles;
 
-        public OrderOffersRepository()
+        public OffersRepository()
         {
             this.orderArticles = new List<OrderOffer>();
         }
