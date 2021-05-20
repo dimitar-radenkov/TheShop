@@ -1,6 +1,4 @@
-﻿using TheShop.Models;
-
-namespace TheShop.Services
+﻿namespace TheShop.Services
 {
     public interface ISalesService
     {

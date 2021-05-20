@@ -24,14 +24,24 @@ namespace TheShop
                     fileSizeLimitBytes: 20_000_000)
                 .CreateLogger();
 
+            //other
             builder.RegisterInstance(logger);
+            builder.RegisterType<Application>().As<IApplication>();
+
+            //repositories
             builder.RegisterType<OrdersRepository>().As<IOrdersRepository>();
             builder.RegisterType<ArticlesRepository>().As<IArticlesRepository>();
             builder.RegisterType<SalesRepository>().As<ISalesRepository>();
             builder.RegisterType<OffersRepository>().As<IOffersRepository>();
+
+            //providers
             builder.RegisterType<SuppliersProvider>().As<ISuppliersProvider>();
+
+            //services
             builder.RegisterType<SuppliersService>().As<ISuppliersService>();
-            builder.RegisterType<ReportsService>();
+            builder.RegisterType<ReportsService>().As<IReportsService>();
+            builder.RegisterType<SalesService>().As<ISalesService>();
+            builder.RegisterType<OrdersService>().As<IOrdersService>();
 
             return builder.Build();
         }

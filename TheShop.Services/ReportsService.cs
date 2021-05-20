@@ -8,19 +8,21 @@ using TheShop.Models.ViewModels;
 
 namespace TheShop.Services
 {
-    public class ReportsService
+    public class ReportsService : IReportsService
     {
-        private readonly IOrdersRepository ordersRepository;
-        private readonly IArticlesRepository articlesRepository;
-        private readonly ISalesRepository salesRepository;
         private readonly Logger logger;
+        private readonly IArticlesRepository articlesRepository;
+        private readonly IOrdersRepository ordersRepository;
+        private readonly ISalesRepository salesRepository;
 
         public ReportsService(
             Logger logger,
+            IArticlesRepository articlesRepository,
             IOrdersRepository ordersRepository,
             ISalesRepository salesRepository)
         {
             this.logger = logger;
+            this.articlesRepository = articlesRepository;
             this.ordersRepository = ordersRepository;
             this.salesRepository = salesRepository;
         }

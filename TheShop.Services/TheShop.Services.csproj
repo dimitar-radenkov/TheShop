@@ -45,6 +45,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="IOrdersService.cs" />
+    <Compile Include="IReportsService.cs" />
     <Compile Include="ISalesService.cs" />
     <Compile Include="ISuppliersProvider.cs" />
     <Compile Include="ISuppliersService.cs" />
