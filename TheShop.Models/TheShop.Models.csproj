@@ -44,7 +44,7 @@
     <Compile Include="Models\Article.cs" />
     <Compile Include="Models\ArticleWithPrice.cs" />
     <Compile Include="Models\Order.cs" />
-    <Compile Include="Models\OrderOffer.cs" />
+    <Compile Include="Models\Offer.cs" />
     <Compile Include="Models\OrderStatus.cs" />
     <Compile Include="Models\Sale.cs" />
     <Compile Include="Models\ViewModels\ArticleViewModel.cs" />

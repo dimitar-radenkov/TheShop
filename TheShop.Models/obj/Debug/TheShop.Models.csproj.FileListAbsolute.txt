@@ -1,6 +1,0 @@
-C:\Users\dradenkov\Documents\GitHub\TheShop\TheShop.Models\bin\Debug\TheShop.Models.dll
-C:\Users\dradenkov\Documents\GitHub\TheShop\TheShop.Models\bin\Debug\TheShop.Models.pdb
-C:\Users\dradenkov\Documents\GitHub\TheShop\TheShop.Models\obj\Debug\TheShop.Models.csprojAssemblyReference.cache
-C:\Users\dradenkov\Documents\GitHub\TheShop\TheShop.Models\obj\Debug\TheShop.Models.csproj.CoreCompileInputs.cache
-C:\Users\dradenkov\Documents\GitHub\TheShop\TheShop.Models\obj\Debug\TheShop.Models.dll
-C:\Users\dradenkov\Documents\GitHub\TheShop\TheShop.Models\obj\Debug\TheShop.Models.pdb

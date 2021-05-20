@@ -6,5 +6,9 @@
 /TheShop/bin/Debug
 /.vs/TheShop/v16/.suo
 /packages
-/TheShop.Services/bin/Debug
-/TheShop.Services/obj/Debug
+/TheShop.Services/bin
+/TheShop.Services/obj
+bin
+/TheShop.Models/obj
+/TheShop.Database/bin
+/TheShop.Database/obj

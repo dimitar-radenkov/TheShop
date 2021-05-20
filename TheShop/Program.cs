@@ -18,8 +18,11 @@ namespace TheShop
                 var salesService = scope.Resolve<ISalesService>();
                 try
                 {
-                    var orderId = ordersService.GetOrder(articleId: 1, maxPrice: 100);
-                    salesService.Sell()
+                    var orderOffer = ordersService.GetOrder(articleId: 1, maxPrice: 100);
+                    if (orderOffer.HasValidOffer)
+                    {
+                        salesService.Sell(orderOffer.OrderId, orderOffer.OfferId.Value, 1);
+                    }
 
                     //var order = shopService.MakeOrder(articleId: 1, maxPrice: 10);
                     //if (order.Status == Models.OrderStatus.Fulfilled)

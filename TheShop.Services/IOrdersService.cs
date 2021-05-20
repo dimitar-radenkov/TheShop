@@ -4,6 +4,6 @@ namespace TheShop.Services
 {
     public interface IOrdersService
     {
-        Order GetOrder(int articleId, decimal maxPrice);
+        OrderOffer GetOrder(int articleId, decimal maxPrice);
     }
 }

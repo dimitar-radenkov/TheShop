@@ -1,9 +1,0 @@
-C:\Users\dradenkov\Documents\GitHub\TheShop\TheShop.Database\obj\Debug\TheShop.Database.csproj.CoreCompileInputs.cache
-C:\Users\dradenkov\Documents\GitHub\TheShop\TheShop.Database\bin\Debug\TheShop.Database.dll
-C:\Users\dradenkov\Documents\GitHub\TheShop\TheShop.Database\bin\Debug\TheShop.Database.pdb
-C:\Users\dradenkov\Documents\GitHub\TheShop\TheShop.Database\bin\Debug\TheShop.Models.dll
-C:\Users\dradenkov\Documents\GitHub\TheShop\TheShop.Database\bin\Debug\TheShop.Models.pdb
-C:\Users\dradenkov\Documents\GitHub\TheShop\TheShop.Database\obj\Debug\TheShop.Database.csproj.CopyComplete
-C:\Users\dradenkov\Documents\GitHub\TheShop\TheShop.Database\obj\Debug\TheShop.Database.dll
-C:\Users\dradenkov\Documents\GitHub\TheShop\TheShop.Database\obj\Debug\TheShop.Database.pdb
-C:\Users\dradenkov\Documents\GitHub\TheShop\TheShop.Database\obj\Debug\TheShop.Database.csprojAssemblyReference.cache

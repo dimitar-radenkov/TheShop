@@ -30,7 +30,7 @@ namespace TheShop.Services
             this.suppliersService = suppliersService;
         }
 
-        public Order GetOrder(int articleId, decimal maxPrice)
+        public OrderOffer GetOrder(int articleId, decimal maxPrice)
         {
             var order = new Order
             {
@@ -49,29 +49,34 @@ namespace TheShop.Services
                     .ToList();
 
                 order.Status = articles.Any() ? OrderStatus.Fulfilled : OrderStatus.Unfullfilled;
+                this.ordersRepository.Update(order.Id, order);
 
+                int? bestOfferId = null;
                 if (articles.Any())
                 {
-                    articles
-                        .Select(x => new OrderOffer
+                    var offers = articles
+                        .Select(x => new Offer
                         {
                             ArticleId = articleId,
                             OrderId = order.Id,
                             SupplierId = x?.SupplierId,
                             Price = x?.Price
                         })
-                        .ToList()
-                        .ForEach(oa => this.offersRepository.Add(oa));
+                        .OrderBy(x => x.Price)
+                        .ToList();
+
+                    offers.ForEach(x => this.offersRepository.Add(x));
+
+                    bestOfferId = offers.First().Id;
                 }
 
-                return order;
+                return new OrderOffer { OrderId = order.Id, OfferId = bestOfferId };
             }
             catch (Exception e)
             {
                 this.logger.Debug($"Unable to make order for article [{articleId}]. Reason: {e.Message}");
-                order = this.ordersRepository.Add(order);
 
-                return order;
+                return new OrderOffer { OrderId = order.Id, OfferId = null };
             }
         }
     }

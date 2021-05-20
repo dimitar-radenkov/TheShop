@@ -7,14 +7,14 @@ namespace TheShop.Database
 {
     public class OffersRepository : IOffersRepository
     {
-        private List<OrderOffer> orderArticles;
+        private List<Offer> orderArticles;
 
         public OffersRepository()
         {
-            this.orderArticles = new List<OrderOffer>();
+            this.orderArticles = new List<Offer>();
         }
 
-        public OrderOffer Add(OrderOffer orderArticle)
+        public Offer Add(Offer orderArticle)
         {
             var id = this.orderArticles.Any() ? this.orderArticles.Max(x => x.Id) + 1 : 1;
             orderArticle.Id = id;
@@ -24,7 +24,7 @@ namespace TheShop.Database
             return orderArticle;
         }
 
-        public OrderOffer Get(int id)
+        public Offer Get(int id)
         {
             var orderArticle = this.orderArticles.FirstOrDefault(x => x.Id == id);
 
@@ -36,7 +36,7 @@ namespace TheShop.Database
             return orderArticle;
         }
 
-        public IEnumerable<OrderOffer> GetAll()
+        public IEnumerable<Offer> GetAll()
         {
             return this.orderArticles;
         }

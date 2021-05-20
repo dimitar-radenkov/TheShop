@@ -6,8 +6,8 @@ namespace TheShop.Database
 {
     public interface IOffersRepository
     {
-        OrderOffer Add(OrderOffer orderArticle);
-        OrderOffer Get(int id);
-        IEnumerable<OrderOffer> GetAll();
+        Offer Add(Offer orderArticle);
+        Offer Get(int id);
+        IEnumerable<Offer> GetAll();
     }
 }
