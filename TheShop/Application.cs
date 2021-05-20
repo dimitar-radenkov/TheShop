@@ -1,5 +1,6 @@
 ﻿using System;
 
+using Serilog;
 using Serilog.Core;
 
 using TheShop.Services;
@@ -9,12 +10,12 @@ namespace TheShop
 
     public class Application : IApplication
     {
-        private readonly Logger logger;
+        private readonly ILogger logger;
         private readonly IOrdersService ordersService;
         private readonly ISalesService salesService;
 
         public Application(
-            Logger logger,
+            ILogger logger,
             IOrdersService ordersService,
             ISalesService salesService)
         {

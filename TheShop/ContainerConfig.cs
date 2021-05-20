@@ -25,7 +25,7 @@ namespace TheShop
                 .CreateLogger();
 
             //other
-            builder.RegisterInstance(logger);
+            builder.RegisterInstance<ILogger>(logger);
             builder.RegisterType<Application>().As<IApplication>();
 
             //repositories

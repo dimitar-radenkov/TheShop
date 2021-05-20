@@ -1,6 +1,6 @@
 ﻿using System.Linq;
 
-using Serilog.Core;
+using Serilog;
 
 using TheShop.Database;
 using TheShop.Models;
@@ -10,13 +10,13 @@ namespace TheShop.Services
 {
     public class ReportsService : IReportsService
     {
-        private readonly Logger logger;
+        private readonly ILogger logger;
         private readonly IArticlesRepository articlesRepository;
         private readonly IOrdersRepository ordersRepository;
         private readonly ISalesRepository salesRepository;
 
         public ReportsService(
-            Logger logger,
+            ILogger logger,
             IArticlesRepository articlesRepository,
             IOrdersRepository ordersRepository,
             ISalesRepository salesRepository)

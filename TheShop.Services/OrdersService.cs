@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 
-using Serilog.Core;
+using Serilog;
 
 using TheShop.Database;
 using TheShop.Models;
@@ -10,23 +10,20 @@ namespace TheShop.Services
 {
     public class OrdersService : IOrdersService
     {
-        private readonly Logger logger;
+        private readonly ILogger logger;
         private readonly IOrdersRepository ordersRepository;
         private readonly IOffersRepository offersRepository;
-        private readonly IArticlesRepository articlesRepository;
         private readonly ISuppliersService suppliersService;
 
         public OrdersService(
-            Logger logger,
+            ILogger logger,
             IOrdersRepository ordersRepository,
             IOffersRepository offersRepository,
-            IArticlesRepository articlesRepository,
             ISuppliersService suppliersService)
         {
             this.logger = logger;
             this.ordersRepository = ordersRepository;
             this.offersRepository = offersRepository;
-            this.articlesRepository = articlesRepository;
             this.suppliersService = suppliersService;
         }
 
@@ -40,7 +37,7 @@ namespace TheShop.Services
                 DateCreated = DateTime.UtcNow,
             };
 
-            this.ordersRepository.Add(order);
+            order = this.ordersRepository.Add(order);
 
             try
             {
@@ -55,17 +52,17 @@ namespace TheShop.Services
                 if (articles.Any())
                 {
                     var offers = articles
-                        .Select(x => new Offer
+                        .Select(a => new Offer
                         {
                             ArticleId = articleId,
                             OrderId = order.Id,
-                            SupplierId = x?.SupplierId,
-                            Price = x?.Price
+                            SupplierId = a?.SupplierId,
+                            Price = a?.Price
                         })
                         .OrderBy(x => x.Price)
                         .ToList();
 
-                    offers.ForEach(x => this.offersRepository.Add(x));
+                    offers.ForEach(o => this.offersRepository.Add(o));
 
                     bestOfferId = offers.First().Id;
                 }
