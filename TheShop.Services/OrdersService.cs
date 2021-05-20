@@ -5,36 +5,32 @@ using Serilog.Core;
 
 using TheShop.Database;
 using TheShop.Models;
-using TheShop.Models.ViewModels;
 
 namespace TheShop.Services
 {
-    public class ShopService
+    public class OrdersService : IOrdersService
     {
-        private readonly IOrdersRepository ordersRepository;
-        private readonly IArticlesRepository articlesRepository;
-        private readonly ISalesRepository salesRepository;
-        private readonly IOffersRepository offersRepository;
-        private readonly ISuppliersService suppliersService;
         private readonly Logger logger;
+        private readonly IOrdersRepository ordersRepository;
+        private readonly IOffersRepository offersRepository;
+        private readonly IArticlesRepository articlesRepository;
+        private readonly ISuppliersService suppliersService;
 
-        public ShopService(
+        public OrdersService(
             Logger logger,
             IOrdersRepository ordersRepository,
-            IArticlesRepository articlesRepository,
-            ISalesRepository salesRepository,
             IOffersRepository offersRepository,
+            IArticlesRepository articlesRepository,
             ISuppliersService suppliersService)
         {
             this.logger = logger;
             this.ordersRepository = ordersRepository;
-            this.articlesRepository = articlesRepository;
-            this.salesRepository = salesRepository;
             this.offersRepository = offersRepository;
+            this.articlesRepository = articlesRepository;
             this.suppliersService = suppliersService;
         }
 
-        public Order MakeOrder(int articleId, decimal maxPrice)
+        public Order GetOrder(int articleId, decimal maxPrice)
         {
             var order = new Order
             {
@@ -44,6 +40,8 @@ namespace TheShop.Services
                 DateCreated = DateTime.UtcNow,
             };
 
+            this.ordersRepository.Add(order);
+
             try
             {
                 var articles = this.suppliersService.GetArticles(articleId)
@@ -51,8 +49,6 @@ namespace TheShop.Services
                     .ToList();
 
                 order.Status = articles.Any() ? OrderStatus.Fulfilled : OrderStatus.Unfullfilled;
-
-                this.ordersRepository.Add(order);
 
                 if (articles.Any())
                 {
@@ -77,48 +73,6 @@ namespace TheShop.Services
 
                 return order;
             }
-        }
-
-        public void Sell(Order order, int buyerId)
-        {
-            this.logger.Debug("Trying to sell article with id=" + order.ArticleId);
-
-            var bestOffer = this.offersRepository.GetAll()
-                .Where(x => x.OrderId == order.Id)
-                .OrderBy(x => x.Price)
-                .ToList()
-                .FirstOrDefault();
-
-            var sale = new Sale
-            {
-                OrderId = order.Id,
-                OfferId = bestOffer.Id,
-                BuyerId = buyerId,
-                DateSold = DateTime.UtcNow,
-            };
-
-            this.salesRepository.Add(sale);
-
-            order.Status = OrderStatus.Completed;
-            this.ordersRepository.Update(order.Id, order);
-
-            this.logger.Information("Article with id=" + order.ArticleId + " is sold.");
-        }
-
-        public ArticleViewModel GetById(int articleId)
-        {
-            var article = this.articlesRepository.Get(articleId);
-
-            var orders = this.ordersRepository.GetAll()
-                .Where(x => x.ArticleId == articleId)
-                .Where(x => x.Status == OrderStatus.Completed)
-                .ToList();
-
-            var sales = this.salesRepository.GetAll()
-                .Where(sale => orders.Select(x => x.Id).ToList().Contains(sale.OrderId))
-                .ToList();
-
-            return new ArticleViewModel(article.Id, article.Name);
         }
     }
 }

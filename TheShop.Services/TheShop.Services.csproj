@@ -45,10 +45,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Class1.cs" />
+    <Compile Include="IOrdersService.cs" />
+    <Compile Include="ISalesService.cs" />
     <Compile Include="ISuppliersProvider.cs" />
     <Compile Include="ISuppliersService.cs" />
+    <Compile Include="OrdersService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ShopService.cs" />
+    <Compile Include="SalesService.cs" />
+    <Compile Include="ReportsService.cs" />
     <Compile Include="SuppliersProvider.cs" />
     <Compile Include="SuppliersService.cs" />
     <Compile Include="Suppliers\HiPriceSupplier.cs" />

@@ -31,7 +31,7 @@ namespace TheShop
             builder.RegisterType<OffersRepository>().As<IOffersRepository>();
             builder.RegisterType<SuppliersProvider>().As<ISuppliersProvider>();
             builder.RegisterType<SuppliersService>().As<ISuppliersService>();
-            builder.RegisterType<ShopService>();
+            builder.RegisterType<ReportsService>();
 
             return builder.Build();
         }
