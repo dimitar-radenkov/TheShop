@@ -29,6 +29,18 @@ namespace TheShop.Database
             return sale;
         }
 
+        public Sale Get(int id)
+        {
+            var sale = this.sales.FirstOrDefault(x => x.Id == id);
+
+            if (sale == null)
+            {
+                throw new RepositoryException();
+            }
+
+            return sale;
+        }
+
         public IEnumerable<Sale> GetAll()
         {
             return this.sales;

@@ -35,10 +35,10 @@ namespace TheShop.Tests
             this.suppliersServiceMock = new Mock<ISuppliersService>();
 
             this.ordersService = new OrdersService(
-                loggerMock.Object,
-                ordersRepositoryMock.Object,
-                offersRepositoryMock.Object,
-                suppliersServiceMock.Object);
+                this.loggerMock.Object,
+                this.ordersRepositoryMock.Object,
+                this.offersRepositoryMock.Object,
+                this.suppliersServiceMock.Object);
         }
 
         [Test]

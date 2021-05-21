@@ -4,6 +4,6 @@ namespace TheShop.Services
 {
     public interface IReportsService
     {
-        ArticleViewModel GetByArticleId(int articleId);
+        ReportViewModel GetByArticleId(int articleId);
     }
 }

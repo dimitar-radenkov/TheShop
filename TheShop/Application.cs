@@ -28,16 +28,18 @@ namespace TheShop
 
         public void Run()
         {
-            try
-            {
-                var quit = false;
-                while (!quit)
-                {
-                    Console.WriteLine("1. Order");
-                    Console.WriteLine("2. Get Information");
-                    Console.WriteLine("3. Quit");
-                    Console.WriteLine();
 
+            var quit = false;
+            while (!quit)
+            {
+                Console.WriteLine();
+                Console.WriteLine("1. Buy");
+                Console.WriteLine("2. Get Information");
+                Console.WriteLine("3. Quit");
+                Console.WriteLine();
+
+                try
+                {
                     var choice = int.Parse(Console.ReadLine());
                     switch (choice)
                     {
@@ -50,7 +52,12 @@ namespace TheShop
                                 if (orderOffer.HasValidOffer)
                                 {
                                     salesService.Sell(orderOffer.OrderId, orderOffer.OfferId.Value, 1);
+
+                                    Console.WriteLine($"Article {articleId} is sold");
+                                    break;
                                 }
+
+                                Console.WriteLine($"There is no appropriate offer for article {articleId}");
 
                                 break;
                             }
@@ -58,6 +65,7 @@ namespace TheShop
                             {
                                 var articleId = this.AskForArticleId();
                                 this.logger.Debug($"Get information for article: {articleId} ");
+                                Console.WriteLine(this.reportsService.GetByArticleId(articleId));
                                 break;
                             }
                         case 3:
@@ -74,11 +82,14 @@ namespace TheShop
                             }
                     }
                 }
-            }
-            catch (Exception ex)
-            {
-                this.logger.Debug($"Unknown error occured: {ex.Message}");
-                Console.WriteLine(ex);
+                catch (ServiceException e)
+                {
+                    Console.WriteLine($"Service error occured! {e.Message}");
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine($"Unknown error occured! {e.Message}");
+                }
             }
         }
 

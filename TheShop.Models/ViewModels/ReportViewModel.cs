@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
@@ -6,18 +7,28 @@ namespace TheShop.Models.ViewModels
 {
     public class SaleViewModel
     {
-        
+        public decimal Price { get; set; }
+        public string Buyer { get; set; }
+        public DateTime DateSold { get; set; }
+        public DateTime DateOrdered { get; set; }
+
+        public override string ToString()
+        {
+            return $"Sold for {this.Price} on {this.DateSold} by '{this.Buyer}' ordered on {this.DateOrdered}";
+        }
     }
 
-    public class ArticleViewModel
+    public class ReportViewModel
     {
         public int Id { get; }
         public string Name { get; }
         public IEnumerable<SaleViewModel> Sales { get; }
 
-        public ArticleViewModel(int id, string name)
+        public ReportViewModel(int id, string name, IEnumerable<SaleViewModel> sales)
         {
-
+            this.Id = id;
+            this.Name = name;
+            this.Sales = sales;
         }
 
         public override string ToString()
@@ -30,7 +41,7 @@ namespace TheShop.Models.ViewModels
                 sb.AppendLine("\tSales:");
                 foreach (var sale in this.Sales)
                 {
-                    sb.AppendLine($"");
+                    sb.AppendLine($"\t{sale}");
                 }
             }
 

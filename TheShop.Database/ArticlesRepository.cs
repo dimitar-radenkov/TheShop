@@ -35,7 +35,7 @@ namespace TheShop.Database
 
             if (article == null)
             {
-                throw new RepositoryException();
+                throw new RepositoryException("Unable to find article");
             }
 
             return article;
