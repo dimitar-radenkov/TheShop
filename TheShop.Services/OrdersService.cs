@@ -56,8 +56,8 @@ namespace TheShop.Services
                         {
                             ArticleId = articleId,
                             OrderId = order.Id,
-                            SupplierId = a?.SupplierId,
-                            Price = a?.Price
+                            SupplierId = a.SupplierId,
+                            Price = a.Price
                         })
                         .OrderBy(x => x.Price)
                         .ToList();

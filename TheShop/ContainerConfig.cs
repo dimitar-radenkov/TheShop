@@ -29,10 +29,10 @@ namespace TheShop
             builder.RegisterType<Application>().As<IApplication>();
 
             //repositories
-            builder.RegisterType<OrdersRepository>().As<IOrdersRepository>();
-            builder.RegisterType<ArticlesRepository>().As<IArticlesRepository>();
-            builder.RegisterType<SalesRepository>().As<ISalesRepository>();
-            builder.RegisterType<OffersRepository>().As<IOffersRepository>();
+            builder.RegisterType<OrdersRepository>().As<IOrdersRepository>().SingleInstance();
+            builder.RegisterType<ArticlesRepository>().As<IArticlesRepository>().SingleInstance();
+            builder.RegisterType<SalesRepository>().As<ISalesRepository>().SingleInstance();
+            builder.RegisterType<OffersRepository>().As<IOffersRepository>().SingleInstance();
 
             //providers
             builder.RegisterType<SuppliersProvider>().As<ISuppliersProvider>();
