@@ -42,13 +42,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Models\Article.cs" />
-    <Compile Include="Models\ArticleWithPrice.cs" />
-    <Compile Include="Models\Order.cs" />
-    <Compile Include="Models\Offer.cs" />
-    <Compile Include="Models\OrderStatus.cs" />
-    <Compile Include="Models\Sale.cs" />
-    <Compile Include="Models\ViewModels\ArticleViewModel.cs" />
+    <Compile Include="Entities\Article.cs" />
+    <Compile Include="ArticleWithPrice.cs" />
+    <Compile Include="Entities\Order.cs" />
+    <Compile Include="Entities\Offer.cs" />
+    <Compile Include="OrderOffer.cs" />
+    <Compile Include="Entities\OrderStatus.cs" />
+    <Compile Include="Entities\Sale.cs" />
+    <Compile Include="ViewModels\ArticleViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

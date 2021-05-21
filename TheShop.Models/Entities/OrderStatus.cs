@@ -1,4 +1,4 @@
-﻿namespace TheShop.Models
+﻿namespace TheShop.Models.Entities
 {
     public enum OrderStatus
     {

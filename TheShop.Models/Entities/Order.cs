@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace TheShop.Models
+namespace TheShop.Models.Entities
 {
     public class Order
     {
@@ -9,14 +9,5 @@ namespace TheShop.Models
         public decimal MaxPrice { get; set; }
         public DateTime DateCreated { get; set; }
         public OrderStatus Status { get; set; }
-    }
-
-    public class OrderOffer
-    {
-        public int OrderId { get; set; }
-
-        public int? OfferId { get; set; }
-
-        public bool HasValidOffer => this.OfferId != null;
     }
 }

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace TheShop.Models
+namespace TheShop.Models.Entities
 {
     public class Sale
     {
