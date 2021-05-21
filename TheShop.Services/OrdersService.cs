@@ -44,9 +44,9 @@ namespace TheShop.Services
 
                 order = this.ordersRepository.Add(order);
 
-                var articles = this.suppliersService.GetArticles(articleId)
-                    .Where(x => x.Price <= maxPrice)
-                    .ToList();
+                var articles = this.suppliersService.GetArticles(articleId);
+                articles.ToList().ForEach(x => this.logger.Debug($"Supplier:{x.SupplierId} sent offer:{x.Price} for article:{articleId}"));
+                articles = articles.Where(x => x.Price <= maxPrice).ToList();
 
                 order.Status = articles.Any() ? OrderStatus.Fulfilled : OrderStatus.Unfullfilled;
                 this.ordersRepository.Update(order.Id, order);

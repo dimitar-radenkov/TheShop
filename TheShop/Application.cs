@@ -33,7 +33,7 @@ namespace TheShop
             while (!quit)
             {
                 Console.WriteLine();
-                Console.WriteLine("1. Buy");
+                Console.WriteLine("1. Order");
                 Console.WriteLine("2. Get Information");
                 Console.WriteLine("3. Quit");
                 Console.WriteLine();
