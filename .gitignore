@@ -14,3 +14,4 @@ bin
 /TheShop.Database/obj
 /TheShop.Tests/obj
 /.vs/TheShop/v16/TestStore/0
+.vs/TheShop/DesignTimeBuild/.dtbcache.v2
