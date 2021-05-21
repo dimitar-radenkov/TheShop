@@ -10,6 +10,7 @@ using Serilog;
 
 using TheShop.Database;
 using TheShop.Models;
+using TheShop.Models.Entities;
 using TheShop.Services;
 
 namespace TheShop.Tests
@@ -104,7 +105,7 @@ namespace TheShop.Tests
         }
 
         [Test]
-        public void GetOrder_ExceptionIsThrown_ShouldReturnInvalidOffer()
+        public void GetOrder_ExceptionIsThrown_ShouldRethrowServiceException()
         {
             //arrange
             var orderId = 1;
@@ -126,13 +127,8 @@ namespace TheShop.Tests
                 .Setup(x => x.GetArticles(articleId))
                 .Throws(new Exception());
 
-            //act
-            var result = ordersService.GetOrder(articleId, maxPrice);
-
-            //assert
-            Assert.IsFalse(result.HasValidOffer);
-            Assert.IsNull(result.OfferId);
-            Assert.AreEqual(actualOrder.Status, OrderStatus.AwaitingFulfillment);
+            //act && assert
+            Assert.Throws<ServiceException>(() => ordersService.GetOrder(articleId, maxPrice));
         }
 
         [Test]

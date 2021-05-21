@@ -3,7 +3,7 @@
 using Serilog;
 
 using TheShop.Database;
-using TheShop.Models;
+using TheShop.Models.Entities;
 using TheShop.Models.ViewModels;
 
 namespace TheShop.Services

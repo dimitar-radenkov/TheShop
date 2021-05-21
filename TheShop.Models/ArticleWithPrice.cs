@@ -1,4 +1,6 @@
-﻿namespace TheShop.Models
+﻿using TheShop.Models.Entities;
+
+namespace TheShop.Models
 {
     public class ArticleWithPrice : Article
     {

@@ -3,7 +3,7 @@
 using Serilog;
 
 using TheShop.Database;
-using TheShop.Models;
+using TheShop.Models.Entities;
 
 namespace TheShop.Services
 {
@@ -25,23 +25,32 @@ namespace TheShop.Services
 
         public void Sell(int orderId, int offerId, int buyerId)
         {
-            var order = this.ordersRepository.Get(orderId);
-            this.logger.Debug("Trying to sell article with id=" + order.ArticleId);
-
-            var sale = new Sale
+            try
             {
-                OrderId = order.Id,
-                OfferId = offerId,
-                BuyerId = buyerId,
-                DateSold = DateTime.UtcNow,
-            };
+                this.logger.Debug($"Processing order: {orderId} ");
 
-            this.salesRepository.Add(sale);
+                var order = this.ordersRepository.Get(orderId);
 
-            order.Status = OrderStatus.Completed;
-            this.ordersRepository.Update(order.Id, order);
+                var sale = new Sale
+                {
+                    OrderId = order.Id,
+                    OfferId = offerId,
+                    BuyerId = buyerId,
+                    DateSold = DateTime.UtcNow,
+                };
 
-            this.logger.Information("Article with id=" + order.ArticleId + " is sold.");
+                this.salesRepository.Add(sale);
+
+                order.Status = OrderStatus.Completed;
+                this.ordersRepository.Update(order.Id, order);
+
+                this.logger.Information($"Sold article {order.ArticleId} from {buyerId} according to {offerId}");
+            }
+            catch (Exception e)
+            {
+                this.logger.Error($"Unable to process order {orderId}, from {buyerId} according to {offerId}", e.Message);
+                throw new ServiceException("Some error occured while processing order", e);
+            }
         }
     }
 }

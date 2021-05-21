@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-using TheShop.Models;
+using TheShop.Models.Entities;
 
 namespace TheShop.Database
 {
