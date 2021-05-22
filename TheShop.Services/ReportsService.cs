@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 
 using Serilog;
 
@@ -34,6 +35,8 @@ namespace TheShop.Services
         {
             try
             {
+                this.logger.Debug($"Getting information for article : {articleId}");
+
                 var article = this.articlesRepository.Get(articleId);
 
                 var orders = this.ordersRepository.GetAll()
@@ -43,23 +46,22 @@ namespace TheShop.Services
 
                 var sales = this.salesRepository.GetAll()
                     .Where(sale => orders.Select(x => x.Id).Contains(sale.OrderId))
-                    .ToList()
                     .Select(sale => new SaleViewModel
                     {
                         Price = this.offersRepository.Get(sale.OfferId).Price,
                         Buyer = sale.BuyerId.ToString(),
                         DateSold = sale.DateSold,
-                        DateOrdered = orders.FirstOrDefault(x => x.Id == sale.Id).DateCreated,
+                        DateOrdered = orders.FirstOrDefault(x => x.Id == sale.OrderId).DateCreated,
                     })
                     .ToList();
 
                 return new ReportViewModel(article.Id, article.Name, sales);
             }
-            catch (System.Exception ex)
+            catch (Exception ex)
             {
+                this.logger.Error($"Some error occured while getting information for article {articleId}.\n{ex.StackTrace}");
                 throw new ServiceException(ex.Message);
             }
-
         }
     }
 }
