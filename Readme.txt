@@ -8,3 +8,17 @@ If naming and structure doesn't suit you, fell free to change them.
 Introducing tests to the existing code is more than welcome.
 Once you're finished with coding send us your code via email or URL to your GitHub/Bitbucket repository. Please include your source control history.
 Should you have any questions or feedback for the assignment, feel free to contact us.
+
+
+Key Changes:
+1. ShopService is refactored to OrdersService and SalesService. 
+2. OrdersService always adds order to the database with status AwaitingFullfilment
+	It will communicate with the SuppliersService to get offers.
+	- if there are not offers that fit the price the order status becomes Unfulfilled
+	- if there is at least a single offer that fits the order status becomes Fulfilled
+	- if suppliers service throws for some reason the order status stays AwaitingFullfilment
+	- all 'valid' offers are stored
+	- the client proceeds with the sale only if there is an offer that fits the price.
+	- if there is more than one offer that fits the client will take the cheapest one.
+	- if there is more than one offer that fits with the same price the client will take the first arrived.
+3. SalesService is just adding a sale record and changes order status to completed.
