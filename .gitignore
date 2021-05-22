@@ -15,3 +15,5 @@ bin
 /TheShop.Tests/obj
 /.vs/TheShop/v16/TestStore/0
 .vs/TheShop/DesignTimeBuild/.dtbcache.v2
+/.vs/TheShop
+/TheShop.UI.Console/obj/Debug
